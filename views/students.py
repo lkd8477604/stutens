@@ -3,16 +3,21 @@
 #softwave: PyCharm
 from django.shortcuts import render,redirect
 from stutens_manage import models
+from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth.decorators import login_required
 
+@login_required()
 def get_students(request):
     stu_list = models.Students.objects.all()
     return render(request, 'students_manage/get_students.html', {'stu_list':stu_list})
 
+@login_required()
 def del_students(request):
     nid = request.GET.get('nid', '')
     models.Students.objects.filter(id= nid).delete()
     return redirect('/stutens_manage/students.html')
 
+@login_required()
 def edit_students(request):
     if request.method == 'GET':
         nid = request.GET.get('nid', '')
@@ -33,6 +38,7 @@ def edit_students(request):
         )
         return redirect('/stutens_manage/students.html')
 
+@login_required()
 def add_students(request):
     if request.method == 'GET':
         cs_list = models.Classes.objects.all()

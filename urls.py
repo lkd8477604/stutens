@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from stutens_manage.views import classes,teachers,students
+from stutens_manage.views import classes,teachers,students, ajax,Login,Host
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,8 +23,16 @@ urlpatterns = [
     path('add_classes.html', classes.add_classes),
     path('del_classes.html', classes.del_classes),
     path('edit_classes.html', classes.edit_classes),
+
     path('students.html', students.get_students),
     path('add_students.html', students.add_students),
     path('del_students.html', students.del_students),
     path('edit_students.html', students.edit_students),
+
+    path('set_teachers.html', classes.set_teachers),
+    path('ajax.html', ajax.del_classes),
+
+    path('index.html', Login.index),
+    path('log_out.html', Login.log_out),
+    path('host.html', Host.host_web)
 ]
