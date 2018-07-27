@@ -6,11 +6,17 @@ from stutens_manage import models
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from stutens_manage.views.Login import acc_login
-
+from pure_pagination import Paginator,EmptyPage,PageNotAnInteger
 
 @login_required()
 def get_classes(request):
     class_list = models.Classes.objects.all()
+    p = Paginator(class_list, 2)
+    page = request.GET.get('page', 1)
+    try:
+        class_list = p.page(int(page))
+    except PageNotAnInteger:
+        class_list = p.page(1)
     return render(request, 'students_manage/get_classes.html', {'class_list':class_list})
 
 @login_required()
